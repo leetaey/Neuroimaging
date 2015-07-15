@@ -58,6 +58,10 @@ At the end of this step, it is once again worth CHECKING the brain images (*_bra
 
 If you later want to add more subjects to your analysis then just put the new subjects' images inside the toplevel directory (e.g. my_fsl_vbm) and re-run fslvbm_1_bet. Don't forget to update template_list if necessary.
 
+전체과정에서 이 단계가 가장 중요하다. 제대로 skull stripping을 하지 않으면 엉터리 데이터로 분석하는 셈이 된다. skull stripping에서의 가장 큰 원칙 중 하나는 brain을 손상시키는 것 보다는 적게 벗겨내는 것이 더 낳다 라는 것이다. 따라서 다소간에 시간이 걸리고 수고스럽더라도 -f 0.1 부터 0.05 단위로 올리면서 반복해서 이미지를 처리해주고 잘 처리되는 것은 제외하고 남은것을 처리하는 방식으로 진행하는 것이다. 
+
+문제는 그런식으로 해나가다보면 아무리 해도 neck의 non-brain tissue가 남아있음에도 brain이 날아가는 현상이 발생한다는 점이다. 1차적으로 그런경우 가장 쉽게 해볼 수 있는 옵션은 bet2 -c 옵션을 통해서 이미지의 중심점 coordinates정보를 직접 입력해주는 것이다. skull stripping의 알고리즘 중 가장 중요한 것중 하나가 이미지의 중심점을 찾아서 그곳을 중심으로 구형을 가정하고 skull stripping을 하는 것인데 문제는 뚱뚱하거나 하관이 발달한 사람중 brain의 직경보다 턱의 직경이 더 큰경우 그곳을 중심점으로 착각하는 현상이 발생하기 때문에 일어난다. 따라서 중심점을 잘 지정해주면 의외로 처리가 잘 되는 경우가 있다. 하지만 개개인의 편차, 이미지 품질 문제 등으로 여전히 잘 되지 않는 경우가 있다. 이런경우에는 AFNI의 3dSkullStrip이나 FreeSurfer의 recon-all의 1단계를 수행해서 나오는 brain.nii 를 이용하는 방법도 있다. 물론 가장 좋은 방법은 3dSlicer, fslview, ANALYZER 같은 프로그램을 통해서 manual tracing을 해서 mask image를 만들고 non-brain tissue를 다 날려주는 방법이다. 가장 권장할만한 방법이고 가장 정확한 방법이지만 오랜 시간과 노력이 들어간다. 
+
 ####C - Creating the template: fslvbm_2_template
 
 <img src="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSLVBM/UserGuide?action=AttachFile&do=get&target=template.jpg">
