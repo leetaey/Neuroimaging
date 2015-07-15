@@ -24,7 +24,7 @@ Fit the diffusion tensor model using dtifit
 You now need to create a new, empty directory (folder) in which you will run the TBSS analysis, for example:
 
 
-```mkdir mytbss```
+<pre><code>mkdir mytbss</code></pre>
 Then copy into there all of your subjects' FA images, giving each subject's FA image a different name. You will make later analysis easier if you name the images in a logical order, for example so that all controls are listed before all patients:
 
 
