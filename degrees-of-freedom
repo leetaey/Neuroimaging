@@ -1,0 +1,12 @@
+dof |    type    | common name | manupulations | use
+----|------------|-------------|---------------|----
+3   | linear     |
+      rigid body
+----------------------------------------------------
+ Linear, rigid-
+ body
+ translation only or
+ constrained
+ procrustes
+ translations
+ images from the same subject
