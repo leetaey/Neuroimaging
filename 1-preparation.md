@@ -13,6 +13,7 @@ dz=`ccalc "-1 * ${cc[2]}"`
 <pre><code>3dcalc -a dwi.nii.gz -expr a -datum float -prefix dwi_float.nii.gz</code></pre>
 
 #### Changes of voxel sizes and orientation (optional)
+이 과정은 필수과정은 아니며 각자의 raw data의 상황에 따라서 적용을 할 수도 있고 하지 않을 수도 있다. 일반적으로 T1 data는 1x1x1 데이터를 dwi data는 2x2x2 데이터를 그리고 fMR 데이터는 3x3x3을 권장하곤 하지만 그도 일정한 기준은 아니다. 마찬가지로 orientation의 경우도 정해진 원칙은 없으니 가급적이면 각기 다른 데이터의 orientation을 한 방향으로 일치시켜두는 것은 잠재적인 에러를 줄이는데 도움이 될 수 있다. 일반적인 표기는 Left(negative) to Right(positive), Posterior(neg.) to Anterior(pos.) 그리고 Inferior(neg.) to Superior(pos.) 이다. 
 
-<pre><code>3dresample -dxyz 2.0 2.0 2.0 -orient RSP -input ${i}_float.nii.gz -prefix ${i}_resample.nii.gz</code></pre>
+<pre><code>3dresample -dxyz 2.0 2.0 2.0 -orient LPI -input ${i}_float.nii.gz -prefix ${i}_resample.nii.gz</code></pre>
 
