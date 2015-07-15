@@ -50,7 +50,7 @@ Vectors are normalised to unit length within the dtifit code. For volumes in whi
 
 b values (bvals): An ASCII text file containing a list of b values applied during each volume acquisition. The b values are assumed to be in s/mm^2 units. The order of entries in this file must match the order of volumes in the input data and entries in the gradient directions text file.
 
-<pre><code>dtifit -k <dti data file> -m <Bet binary mask file> -o <Output basename> -r <b vectors file> -b <b values file> -v (switch on diagnostic messages)</code></pre>
+<pre><code>dtifit -k (dti data file) -m (Bet binary mask file) -o (Output basename) -r (b vectors file) -b (b values file) -v (switch on diagnostic messages)</code></pre>
 
 ####tbss_1_preproc
 
