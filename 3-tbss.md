@@ -13,11 +13,44 @@ We now go through the TBSS steps in detail.
 
 ####create FA data from a diffusion MRI study
 
-In order to run TBSS you need to create a single FA image from each subject in the study. We recommend that you do this using tools in the FDT FSL toolbox; in brief:
+`1. Eddy Current Correction`
 
-Correct your original data for the effects of head movement and eddy currents using eddy_correct
-Create a brain mask by running bet on one of the B=0 (no diffusion weighting) images
-Fit the diffusion tensor model using dtifit
+Eddy currents in the gradient coils induce (approximate) stretches and shears in the diffusion weighted images. These distortions are different for different gradient directions. Eddy Current Correction corrects for these distortions, and for simple head motion, using affine registration to a reference volume.
+
+In the FDT GUI, use the top left drop down menu to select Eddy current correction.
+
+Diffusion weighted data: Use the browse button to select your diffusion weighted dataset (a 4D image).
+Corrected output data : Use the browse button to specify a filename for the corrected 4D dataset.
+Reference volume : Set the volume number for the reference volume that will be used as a target to register all other volumes to. (default=0, i.e. the first volume)
+Command line utility
+
+<pre><code>eddy_correct <4dinput> <4doutput> <reference_no></code></pre>
+
+`2. Create a brain mask by running bet on one of the B=0 (no diffusion weighting) images`
+
+`3. Fit the diffusion tensor model using dtifit`
+
+DTIFIT fits a diffusion tensor model at each voxel. You would typically run dtifit on data that has been pre-processed and eddy current corrected. Note that dtifit is not necessary in order to use the probabilistic tractography (which depends on the output of BEDPOSTX, not DTIFIT).
+
+In the FDT GUI, use the top left drop down menu to select DTIFIT.
+
+Input: You can specify an input directory containing all the required files with standardized filenames, or alternatively you can specify input files manually by turning on the specify input files manually switch. If an input directory is specified then all files must be named as shown in parentheses below. If input files are specified manually they can have any filename. Required files are:
+
+Diffusion weighted data (data): A 4D series of data volumes. This will include diffusion-weighted volumes and volume(s) with no diffusion weighting.
+BET binary brain mask (nodif_brain_mask): A single binarised volume in diffusion space containing ones inside the brain and zeroes outside the brain.
+Output basename: User specifies a basename that will be used to name the outputs of dtifit. If the directory input option is used then the basename will be dti.
+Gradient directions (bvecs): An ASCII text file containing a list of gradient directions applied during diffusion weighted volumes. The order of entries in this file must match the order of volumes in the input data series.
+The format is
+
+x_1 x_2 x_3 ... x_n
+y_1 y_2 y_3 ... y_n
+z_1 z_2 z_3 ... z_n
+
+Vectors are normalised to unit length within the dtifit code. For volumes in which there was no diffusion weighting, the entry should still be present, although the direction of the vector does not matter!
+
+b values (bvals): An ASCII text file containing a list of b values applied during each volume acquisition. The b values are assumed to be in s/mm^2 units. The order of entries in this file must match the order of volumes in the input data and entries in the gradient directions text file.
+
+<pre><code>dtifit -k <dti data file> -m <Bet binary mask file> -o <Output basename> -r <b vectors file> -b <b values file> -v (switch on diagnostic messages)</code></pre>
 
 ####tbss_1_preproc
 
@@ -202,7 +235,7 @@ It is possible to take one or more voxels on the mean FA skeleton and show where
 
 There are two obvious reasons why you might want to back-project a skeleton-space voxel (or voxels). The first is to confirm that a given skeleton point was derived from the correct tract-centre points in all subjects. This can generally be achieve by just taking the first of the back projection steps, from the skeleton to the space of the all_FA data, and viewing the back-projected points on top of all_FA (looking at each subject, i.e., timepoint, separately). The second is to take a skeleton-space voxel or set of voxels (for example, a skeleton-space blob that is significantly different between the two groups of subjects in the study) back to the space of the original subjects' data, in order to run tractography for each subject, with that result forming the tractography seed mask.
 
-http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/TBSS/UserGuide?action=AttachFile&do=get&target=flowchart.png
+<img src="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/TBSS/UserGuide?action=AttachFile&do=get&target=flowchart.png">
 
 #####Option 1: just deproject <skeleton-space-input-image> onto the space of each nonlinearly registered subject in all_FA
 
