@@ -13,7 +13,7 @@ We now go through the TBSS steps in detail.
 
 ####create FA data from a diffusion MRI study
 
-`1. Eddy Current Correction`
+#####1. Eddy Current Correction
 
 Eddy currents in the gradient coils induce (approximate) stretches and shears in the diffusion weighted images. These distortions are different for different gradient directions. Eddy Current Correction corrects for these distortions, and for simple head motion, using affine registration to a reference volume.
 
@@ -26,9 +26,9 @@ Command line utility
 
 <pre><code>eddy_correct <4dinput> <4doutput> <reference_no></code></pre>
 
-`2. Create a brain mask by running bet on one of the B=0 (no diffusion weighting) images`
+#####2. Create a brain mask by running bet on one of the B=0 (no diffusion weighting) images
 
-`3. Fit the diffusion tensor model using dtifit`
+#####3. Fit the diffusion tensor model using dtifit
 
 DTIFIT fits a diffusion tensor model at each voxel. You would typically run dtifit on data that has been pre-processed and eddy current corrected. Note that dtifit is not necessary in order to use the probabilistic tractography (which depends on the output of BEDPOSTX, not DTIFIT).
 
@@ -42,9 +42,9 @@ Output basename: User specifies a basename that will be used to name the outputs
 Gradient directions (bvecs): An ASCII text file containing a list of gradient directions applied during diffusion weighted volumes. The order of entries in this file must match the order of volumes in the input data series.
 The format is
 
-```x_1 x_2 x_3 ... x_n  
+<pre><code>x_1 x_2 x_3 ... x_n  
 y_1 y_2 y_3 ... y_n  
-z_1 z_2 z_3 ... z_n```
+z_1 z_2 z_3 ... z_n</code></pre>
 
 Vectors are normalised to unit length within the dtifit code. For volumes in which there was no diffusion weighting, the entry should still be present, although the direction of the vector does not matter!
 
