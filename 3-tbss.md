@@ -8,7 +8,7 @@ Overview: running TBSS involves a few simple steps:
 * tbss_3_postreg - create the mean FA image and skeletonise it
 * tbss_4_prestats - project all subjects' FA data onto the mean FA skeleton
 * stats (e.g., randomise) - feed the 4D projected FA data into GLM modelling and thresholding in order to find voxels which correlate with your model.
-We now go through the TBSS steps in detail.
+We now go through the TBSS steps in detail.  
 ------------------------------------------------------------------------------------------------------------------------------------
 
 ####create FA data from a diffusion MRI study
