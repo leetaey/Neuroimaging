@@ -84,6 +84,7 @@ fslview all_FA -b 0,0.8 mean_FA_skeleton -b 0.2,0.8 -l Green</code></pre>
 
 eg_skel_all_FA.png The -b option sets sensible display range options, and in the case of the skeleton image, also controls the thresholding applied. Now turn on the movie loop; you will see the mean FA skeleton on top of each different subject's aligned FA image. If all the processing so far has worked ok the skeleton should look like the examples shown here (see the TBSS paper for more examples of different subjects' results underneath the skeleton). If the registration has worked well you should see that in general each subject's major tracts are reasonably well aligned to the relevant parts of the skeleton. If you set the skeleton threshold (in FSLView, the lower of the display range settings) much lower than 0.2, it will extend away towards extremes where there is too much cross-subject variability and where the nonlinear registration has not been able to attain good alignments. Remember the skeleton threshold for the next stage.
 
+http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/TBSS/UserGuide?action=AttachFile&do=get&target=eg_skel_all_FA.png
 
 ####tbss_4_prestats
 
@@ -173,6 +174,7 @@ Now, the 4D prealigned data all_FA (or non-FA equivalent, if requested) is proje
 
 Therefore the simplest possible analysis with randomise is just to test whether the mean of this data is significantly greater than zero, using the -1 option instead of entering a design matrix and contrast file. This tests for L>R. To test for R>L, either invert the data and re-run randomise, or create an appropriate design matrix and contrast file.
 
+http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/TBSS/UserGuide?action=AttachFile&do=get&target=stats_eg.png
 
 ####Displaying TBSS Results
 
@@ -192,11 +194,15 @@ stats_eg2.png Alternatively, although showing the stats results on the TBSS skel
 <pre><code>tbss_fill tbss_tfce_corrp_tstat1 0.95 mean_FA tbss_fill
 fslview mean_FA -b 0,0.6 mean_FA_skeleton -l Green -b 0.2,0.7 tbss_fill -l Red-Yellow</code></pre>
 
+http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/TBSS/UserGuide?action=AttachFile&do=get&target=stats_eg2.png
+
 ####Transforming TBSS results back to native space
 
 It is possible to take one or more voxels on the mean FA skeleton and show where, in each subject's FA image, those voxels originally came from. This "back projection" is composed of one or two steps. First, the skeleton voxel is projected back from its position on the skeleton to the nearby position at the centre of the nearest tract in the subject's FA image in standard space (i.e., after the FA image had been nonlinearly registered to the target image). Second, this point can then be "inverse warped" back into the subject's native space, by inverting the nonlinear registration that was originally applied. The whole process can be viewed thus:
 
 There are two obvious reasons why you might want to back-project a skeleton-space voxel (or voxels). The first is to confirm that a given skeleton point was derived from the correct tract-centre points in all subjects. This can generally be achieve by just taking the first of the back projection steps, from the skeleton to the space of the all_FA data, and viewing the back-projected points on top of all_FA (looking at each subject, i.e., timepoint, separately). The second is to take a skeleton-space voxel or set of voxels (for example, a skeleton-space blob that is significantly different between the two groups of subjects in the study) back to the space of the original subjects' data, in order to run tractography for each subject, with that result forming the tractography seed mask.
+
+http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/TBSS/UserGuide?action=AttachFile&do=get&target=flowchart.png
 
 #####Option 1: just deproject <skeleton-space-input-image> onto the space of each nonlinearly registered subject in all_FA
 
