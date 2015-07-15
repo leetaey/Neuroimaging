@@ -2,7 +2,7 @@
 
 ```#!/bin/sh
 
-#Originally written by Saad Jbabdi
+# Originally written by Saad Jbabdi
 # University of Oxford, FMRIB Centre
 # and posted on JISCMail FSL Archives Feb 3 2012
 # modified by Neda Jahanshad (USC/ENIGMA-DTI)
@@ -102,3 +102,34 @@ cat ${ecclog} | while read line; do
 
 done
 rm -f $tmpo```
+
+#### AFNI protocol
+
+```#!/bin/bash
+
+#Usage: sh rotate_bvecs.sh bvec.1D dwi_al_reg_mat.aff12.1D
+
+echo "bvec: $1"
+echo "matrix: $2" 
+
+nRows=`cat $2 | wc -l`
+nRows=$(expr $nRows - 1)
+echo "Number of Gradient Vectors: $nRows"
+
+for aRow in `count -digits 3 0 $nRows`
+do
+ echo $aRow
+ #separate bvecs
+ 1dcat $1{$aRow} > tmp.bvecs.${aRow} 
+ #separate matrix
+ 1dcat $2{$aRow} > tmp.transform.${aRow} 
+ #change to matrix from ONELINE
+ cat_matvec tmp.transform.${aRow} > tmp.transform.mat.${aRow} 
+ #get rid of translational shifts
+ 1dcat tmp.transform.mat.${aRow}[0..2] > tmp.transform.mat.s.${aRow}
+ echo "0 0 0" > tmp.zero_fill.1D
+ 1dcat tmp.transform.mat.s.${aRow} tmp.zero_fill.1D\' > tmp.transform.final.${aRow
+ Vecwarp -matvec tmp.transform.final.${aRow} -input tmp.bvecs.${aRow} -forward >> bvec_rotated.1D
+done
+
+rm tmp.*```
