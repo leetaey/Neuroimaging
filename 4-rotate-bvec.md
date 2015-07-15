@@ -1,6 +1,6 @@
 ####ENIGMA Protocol
 
-```#!/bin/sh
+<pre><code>#!/bin/sh
 
 # Originally written by Saad Jbabdi
 # University of Oxford, FMRIB Centre
@@ -101,11 +101,11 @@ cat ${ecclog} | while read line; do
     let "ii+=1"
 
 done
-rm -f $tmpo```
+rm -f $tmpo</code></pre>
 
 #### AFNI protocol
 
-```#!/bin/bash
+<pre><code>#!/bin/bash
 
 #Usage: sh rotate_bvecs.sh bvec.1D dwi_al_reg_mat.aff12.1D
 
@@ -132,4 +132,4 @@ do
  Vecwarp -matvec tmp.transform.final.${aRow} -input tmp.bvecs.${aRow} -forward >> bvec_rotated.1D
 done
 
-rm tmp.*```
+rm tmp.*</code></pre>
