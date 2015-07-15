@@ -58,6 +58,8 @@ At the end of this step, it is once again worth CHECKING the brain images (*_bra
 
 If you later want to add more subjects to your analysis then just put the new subjects' images inside the toplevel directory (e.g. my_fsl_vbm) and re-run fslvbm_1_bet. Don't forget to update template_list if necessary.
 
+<img src="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSLVBM/UserGuide?action=AttachFile&do=get&target=template.jpg">
+
 ####C - Creating the template: fslvbm_2_template
 
 template.jpg The second step of the FSL-VBM protocol creates the study-specific grey matter (GM) template.
@@ -79,3 +81,19 @@ fslvbm_2_template -n</code></pre>
 in your FSL-VBM directory.
 
 Once this is completed, CHECK the "template_GM_4D" image in struc with the movie loop in fslview.
+
+####D - Processing the native GM images: fslvbm_3_proc
+
+The final script will non-linearly register all your GM images to the study-specific template and concatenate them into a 4D image ("GM_merg") in the stats directory in your working FSL-VBM directory. The FSL-VBM protocol also introduces a compensation (or "modulation") for the contraction/enlargement due to the non-linear component of the transformation: each voxel of each registered grey matter image is multiplied by the Jacobian of the warp field (see Good et al., 2001). All the modulated registered GM images are concatenated into a 4D image in the stats directory ("GM_mod_merg") and then smoothed ("GM_mod_merg_s3" for instance) by a range of Gaussian kernels; sigma = 2, 3, 4mm, i.e., approximately from FWHM = 2x2.3 = 4.6mm to FWHM = 9mm.
+
+Finally, this last step gets everything ready for you to run permutation-based non-parametric inference using the design.mat and design.con which you supplied, a mask of the GM ("GM_mask") and the 4D multi-subject concatenated processed data (e.g. "GM_mod_merg_s3"). The script runs randomise with inference (generation of p-value maps) turned off, so that it very quickly creates just the raw tstat maps. These tstats maps should help you decide which smoothing is the most relevant to feed into a full run of randomise, and which threshold to use for the cluster-based thresholding (option -c in the randomise command); however, in general we would recommend using the TFCE option (-T) instead of the cluster-based thresholding.
+
+WARNING!!! By default fslvbm_3_proc concatenates the images in alphabetical order (following the names that they started with); make sure this matches the subject ordering assumed in your design.mat model.
+
+All of the above is done simply by running the script:
+
+<pre><code>fslvbm_3_proc</code></pre>
+
+in your FSL-VBM directory.
+
+Please do not forget the final CHECK of the 4D image of modulated registered GM images "GM_mod_merg" using the movie loop in fslview.
