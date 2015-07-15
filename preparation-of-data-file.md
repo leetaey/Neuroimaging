@@ -1,4 +1,4 @@
-#### Changes center coordinates of header file of dataset
+#### Changes center coordinates of header file 
 
 <pre><code>cc=(`3dAttribute -center dwi.nii.gz`)   
 dx=`ccalc "-1 * ${cc[0]}"`
