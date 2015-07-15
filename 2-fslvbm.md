@@ -58,9 +58,9 @@ At the end of this step, it is once again worth CHECKING the brain images (*_bra
 
 If you later want to add more subjects to your analysis then just put the new subjects' images inside the toplevel directory (e.g. my_fsl_vbm) and re-run fslvbm_1_bet. Don't forget to update template_list if necessary.
 
-<img src="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSLVBM/UserGuide?action=AttachFile&do=get&target=template.jpg">
-
 ####C - Creating the template: fslvbm_2_template
+
+<img src="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSLVBM/UserGuide?action=AttachFile&do=get&target=template.jpg">
 
 template.jpg The second step of the FSL-VBM protocol creates the study-specific grey matter (GM) template.
 
@@ -97,3 +97,41 @@ All of the above is done simply by running the script:
 in your FSL-VBM directory.
 
 Please do not forget the final CHECK of the 4D image of modulated registered GM images "GM_mod_merg" using the movie loop in fslview.
+
+####E - Obtaining and displaying your FSL-VBM results
+
+results.jpg We strongly recommend using randomise (permutation testing) for inference in VBM-style analysis and not Gaussian random field theory (GRF), as the approximations underlying the latter are not generally appropriate in such analyses.
+
+#####E1 - Running randomise and displaying TFCE-based thresholding results
+
+Choose the most appropriate smoothing (e.g., sigma=3mm) for the TFCE-based analysis. If you want to apply a different smoothing than already applied, you can do so (e.g., sigma=3.5mm) with:
+
+<pre><code>fslmaths GM_mod_merg -s 3.5 GM_mod_merg_s3.5</code></pre>
+
+Having chosen the most appropriate smoothing (e.g. sigma = 3mm), run randomise (see randomise usage), for instance:
+
+<pre><code>randomise -i GM_mod_merg_s3 -m GM_mask -o fslvbm -d design.mat -t design.con -T -n 5000</code></pre>
+
+You can then view the (1-p) corrected p-value images in FSLView:
+
+<pre><code>fslview $FSLDIR/data/standard/MNI152_T1_2mm fslvbm_tfce_corrp_tstat1 -l Red-Yellow -b 0.949,1
+
+<img src="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSLVBM/UserGuide?action=AttachFile&do=get&target=results.jpg">
+
+#####E2 - Running randomise and displaying cluster-based thresholding results
+
+Once you have chosen the most appropriate smoothing (e.g. sigma = 3mm) and threshold (e.g. t > 2.3) for the cluster-based correction, then feed them into a full run of randomise (see randomise usage), for instance:
+
+<pre><code>randomise -i GM_mod_merg_s3 -m GM_mask -o fslvbm -d design.mat -t design.con -c 2.3 -n 5000</code></pre>
+
+Then you can threshold your "_clustere_corrp_" images (corrected p-values maps) at 0.95 to keep only the significant clusters and use it to mask the corresponding tstats map:
+
+<pre><code>fslmaths fslvbm_clustere_corrp_tstat1 -thr 0.95 -bin mask_pcorrected
+
+fslmaths fslvbm_tstat1 -mas mask_pcorrected fslvbm_tstat1_corrected</code></pre>
+
+before displaying it with fslview overlaid on the template_GM or the MNI152 template for example:
+
+<pre><code>fslview $FSLDIR/data/standard/MNI152_T1_2mm fslvbm_tstat1_corrected -l Red-Yellow -b 2.3,4</code></pre>
+
+To report information about clusters in the results from randomise, see the cluster tool.
