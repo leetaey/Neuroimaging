@@ -114,7 +114,7 @@ Having chosen the most appropriate smoothing (e.g. sigma = 3mm), run randomise (
 
 You can then view the (1-p) corrected p-value images in FSLView:
 
-<pre><code>fslview $FSLDIR/data/standard/MNI152_T1_2mm fslvbm_tfce_corrp_tstat1 -l Red-Yellow -b 0.949,1
+<pre><code>fslview $FSLDIR/data/standard/MNI152_T1_2mm fslvbm_tfce_corrp_tstat1 -l Red-Yellow -b 0.949,1</code></pre>
 
 <img src="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSLVBM/UserGuide?action=AttachFile&do=get&target=results.jpg">
 
