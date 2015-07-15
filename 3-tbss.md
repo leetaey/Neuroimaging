@@ -28,6 +28,14 @@ Command line utility
 
 #####2. Create a brain mask by running bet on one of the B=0 (no diffusion weighting) images
 
+fslroi - extract region of interest (ROI) from an image. You can a) take a 3D ROI from a 3D data set (or if it is 4D, the same ROI is taken from each time point and a new 4D data set is created), b) extract just some time points from a 4D data set, or c) control time and space limits to the ROI. Note that the arguments are minimum index and size (not maximum index). So to extract voxels 10 to 12 inclusive you would specify 10 and 3 (not 10 and 12).
+
+<pre><code>fslroi (original) (target) 0 1</code></pre>
+
+BET (Brain Extraction Tool) deletes non-brain tissue from an image of the whole head. It can also estimate the inner and outer skull surfaces, and outer scalp surface, if you have good quality T1 and T2 input images.
+
+<pre><code>bet (original) (target) -m -n -R -f 0.3 
+
 #####3. Fit the diffusion tensor model using dtifit
 
 DTIFIT fits a diffusion tensor model at each voxel. You would typically run dtifit on data that has been pre-processed and eddy current corrected. Note that dtifit is not necessary in order to use the probabilistic tractography (which depends on the output of BEDPOSTX, not DTIFIT).
