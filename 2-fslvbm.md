@@ -1,1 +1,1 @@
-<img src="https://www.dropbox.com/s/fovgq42w5l3kpo5/bet.gif">
+<img src="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/BET?action=AttachFile&do=get&target=bet2_eg_small.png">
