@@ -42,15 +42,16 @@ Output basename: User specifies a basename that will be used to name the outputs
 Gradient directions (bvecs): An ASCII text file containing a list of gradient directions applied during diffusion weighted volumes. The order of entries in this file must match the order of volumes in the input data series.
 The format is
 
-x_1 x_2 x_3 ... x_n
-y_1 y_2 y_3 ... y_n
-z_1 z_2 z_3 ... z_n
+```x_1 x_2 x_3 ... x_n  
+y_1 y_2 y_3 ... y_n  
+z_1 z_2 z_3 ... z_n```
 
 Vectors are normalised to unit length within the dtifit code. For volumes in which there was no diffusion weighting, the entry should still be present, although the direction of the vector does not matter!
 
 b values (bvals): An ASCII text file containing a list of b values applied during each volume acquisition. The b values are assumed to be in s/mm^2 units. The order of entries in this file must match the order of volumes in the input data and entries in the gradient directions text file.
 
-<pre><code>dtifit -k (dti data file) -m (Bet binary mask file) -o (Output basename) -r (b vectors file) -b (b values file) -v (switch on diagnostic messages)</code></pre>
+<pre><code>dtifit -k (dti data file) -m (Bet binary mask file) -o (Output basename)  
+-r (b vectors file) -b (b values file) -v (switch on diagnostic messages)</code></pre>
 
 ####tbss_1_preproc
 
