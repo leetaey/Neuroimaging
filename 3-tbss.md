@@ -9,7 +9,7 @@ Overview: running TBSS involves a few simple steps:
 * tbss_4_prestats - project all subjects' FA data onto the mean FA skeleton
 * stats (e.g., randomise) - feed the 4D projected FA data into GLM modelling and thresholding in order to find voxels which correlate with your model.
 We now go through the TBSS steps in detail.  
-------------------------------------------------------------------------------------------------------------------------------------
+
 
 ####create FA data from a diffusion MRI study
 
@@ -24,7 +24,7 @@ Fit the diffusion tensor model using dtifit
 You now need to create a new, empty directory (folder) in which you will run the TBSS analysis, for example:
 
 
-<pre><code>mkdir mytbss</code></pre>
+```mkdir mytbss```
 Then copy into there all of your subjects' FA images, giving each subject's FA image a different name. You will make later analysis easier if you name the images in a logical order, for example so that all controls are listed before all patients:
 
 
