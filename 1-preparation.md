@@ -8,6 +8,7 @@ dz=`ccalc "-1 * ${cc[2]}"`
 3drefit -dxorigin $dx -dyorigin $dy -dzorigin $dz dwi.nii.gz</code></pre>
 
 #### Changes data type from integer to float
+기본적으로 정수로 이루어진 이미지포맷은 추후 이미지 변환을 할때 발생하는 소숫점 이하의 정보들을 다 잃어버리게된다. 따라서 이것을 고려하지 않고 그냥 registration을 하게되면 오차의 주 원인이 된다. 한 논문에 의하여 최대 10% 까지 mis-registration 이 발생할 수 있다고 한다. 따라서 이과정을 통하여 이미지 포맷을 integer에서 float으로 미리 변환해두는 것이 중요하다. 단, 이미지 변환 이후에는 데이터 용량이 2배로 늘어나게된다. 
 
 <pre><code>3dcalc -a dwi.nii.gz -expr a -datum float -prefix dwi_float.nii.gz</code></pre>
 
