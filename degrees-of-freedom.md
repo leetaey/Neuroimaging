@@ -6,5 +6,3 @@ dof | type | common name | manupulations | use
 7 | Linear, rigid-body with global rescale | similarity | translations, rotations, and one global scaling factor |a
 9 | Linear, affine | 9-degree affine | translations, rotations, and scaling each of the three axes independently |a
 12 | Linear, affine | 12-degree affine | translations, rotations, and scaling at different places on each of the three axes | a
---------------------------------------------------
-  
