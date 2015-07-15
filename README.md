@@ -1,3 +1,6 @@
 ### neuroimaging
 
-* Preparation of the data files 
+* 3dSlicer
+* AFNI/SUMA
+* FreeSurfer
+* FSL
