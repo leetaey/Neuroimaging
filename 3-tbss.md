@@ -34,7 +34,7 @@ fslroi - extract region of interest (ROI) from an image. You can a) take a 3D RO
 
 BET (Brain Extraction Tool) deletes non-brain tissue from an image of the whole head. It can also estimate the inner and outer skull surfaces, and outer scalp surface, if you have good quality T1 and T2 input images.
 
-<pre><code>bet (original) (target) -m -n -R -f 0.3 
+<pre><code>bet (original) (target) -m -n -R -f 0.3</code></pre>
 
 #####3. Fit the diffusion tensor model using dtifit
 
